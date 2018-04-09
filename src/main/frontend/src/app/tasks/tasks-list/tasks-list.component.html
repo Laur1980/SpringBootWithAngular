@@ -1,1 +1,12 @@
-
+<ul class="list-group">
+	<li *ngFor="let task of getTaskList();index as i" 
+		 class="list-group-item">
+		 Id: {{ task.Id }}
+		 <div class="task-checkbox">
+		 	<input type="checkbox" class="" [checked]="task.IsCompleted" (change)="onChangeTask($event,task)"/>
+		 </div>
+		 <span ngClass="{{ task.IsCompleted? 'name completed' : 'name' }}">{{ task.Name }}</span>
+		 <span class="label {{getDueDateLabel(task)}} pull-right">{{ task.Date.toLocaleString() }}</span>
+		  Name: {{ task.Name }} <button class="btn btn-danger" (click)="onRemove(i)">DELETE</button>
+	</li>
+</ul>
