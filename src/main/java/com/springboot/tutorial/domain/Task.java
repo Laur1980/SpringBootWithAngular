@@ -25,8 +25,7 @@ public class Task implements Serializable{
 	@Column(name="name")
 	private String name;
 	@Column(name="due_date")
-	@JsonFormat(pattern ="dd/MM/YYYY")
-	private LocalDate dueDate;
+	private String dueDate;
 	@Column(name="is_created")
 	private Boolean isCompleted;
 		
@@ -34,7 +33,7 @@ public class Task implements Serializable{
 		super();
 	}
 
-	public Task(Long id, String name, LocalDate dueDate, Boolean isCompleted) {
+	public Task(Long id, String name, String dueDate, Boolean isCompleted) {
 		this.id = id;
 		this.name = name;
 		this.dueDate = dueDate;
@@ -57,11 +56,11 @@ public class Task implements Serializable{
 		this.name = name;
 	}
 
-	public LocalDate getDueDate() {
+	public String getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(LocalDate dueDate) {
+	public void setDueDate(String dueDate) {
 		this.dueDate = dueDate;
 	}
 

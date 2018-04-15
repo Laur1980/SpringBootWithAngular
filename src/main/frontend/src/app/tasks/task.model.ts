@@ -1,38 +1,38 @@
 /**
- * New typescript file
+ * Task Model
  */
 export class Task{
   
-  constructor(private id:number,private name:string,private date:Date,private isCompleted:boolean){
+  constructor(private id:number,private name:string,private dueDate:string,private isCompleted:boolean){
     console.log('Task '+this.id+' created!');
   }
   
-  public get Id():number {
+  public getId():number {
     return this.id;
   } 
   
-  public get Name(){
+  public getName():string{
     return this.name;
   }
   
-  public get Date(){
-    return this.date;
+  public getDueDate():string{
+    return this.dueDate;
   }
   
-  public get IsCompleted(){
+  public getIsCompleted():boolean{
     return this.isCompleted;
   }
   
-  public set Id(id:number){
+  public setId(id:number){
     this.id = id;
   }
   
-  public set Name(name:string){
+  public setName(name:string){
     this.name = name;
   }
   
-  public set Date(date:Date){
-    this.date = date;
+  public setDueDate(date:string){
+    this.dueDate = date;
   }
   
   public setIsCompleted(isCompleted:boolean){

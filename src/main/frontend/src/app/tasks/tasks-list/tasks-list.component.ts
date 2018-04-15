@@ -14,20 +14,18 @@ export class TasksListComponent implements OnInit {
   
   constructor(private taskService:TaskService) {
     this.taskList =[];
-    console.log('TaskList: ',this.taskList);
   }
   
   public onChangeTask(event, task:Task){
-    console.log('Inside onChangeTask, event: ',event);
     let index: number = this.taskList.indexOf(task);
-    let completed:boolean = !task.IsCompleted;
+    let completed:boolean = event.target.checked;
     task.setIsCompleted(completed);
     this.taskList[index]=task;
-    console.log('taskList: ', this.taskList);
+    this.taskService.saveTask(task).subscribe();
   }
   
   public getDueDateLabel(task:Task){
-    return task.IsCompleted?'label-succes':'label-primary';
+    return task.getIsCompleted()?'label-succes':'label-primary';
   }
   
   public getTaskList(){
@@ -37,12 +35,19 @@ export class TasksListComponent implements OnInit {
   public addTask(task: Task){
     this.taskList.push(task);
   }
-  
+    
   public removeTask(i:number):boolean{
      console.log('INSIDE removeTask index: '+i);
      let task = this.taskList[i];
     this.taskList.splice(i,1);
-    console.log('Removing task : '+' id: '+task.Id +" name: "+task.Name);
+    this.taskService.deleteTask(task.getId()).subscribe(
+            response => {
+                console.log(response.json());
+            },error => {
+                console.log(error.json());
+            }
+    );
+    console.log('Removing task : '+' id: '+task.getId() +" name: "+task.getName());
     return task !== undefined;
      
   }
@@ -56,19 +61,16 @@ export class TasksListComponent implements OnInit {
     console.log('INSIDE ngOnInit');
     this.taskService.getTasks()
                     .subscribe((tasks: any[]) => {
-                      this.taskList = tasks
+                        tasks.forEach((e) => {
+                            console.log(e);
+                            this.taskList.push(new Task(e.id,e.name,e.dueDate,e.isCompleted));
+                        });
+                      
                     },
                     (error) => console.log(error)
                   );
-    /*
-    this.taskList.push(new Task(1,'something something',new Date(),true));
-    this.taskList.push(new Task(2,'bla bla',new Date(),false));
-    this.taskList.push(new Task(3,'iada iada iada',new Date(),false));
-    this.taskList.push(new Task(4,'ntz ntz ntz ntz',new Date(),true));
-    this.taskList.push(new Task(5,'goint to the bathroom',new Date(),true));
-    this.taskList.push(new Task(6,'learning Angulas 2.x',new Date(),true));
-    this.taskList.forEach(task => {console.log('id: '+task.Id+' name: '+task.Name) });
-     */
+     console.log('ngOnInit tasks list: ', this.taskList);
+   
   }
 
 }

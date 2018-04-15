@@ -8,4 +8,6 @@ public interface TaskService {
 	
 	Task save(Task task);
 	
+	void delete(long taskId);
+	
 }
