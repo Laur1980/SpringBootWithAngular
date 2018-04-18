@@ -63,13 +63,15 @@ export class TasksListComponent implements OnInit {
                     .subscribe((tasks: any[]) => {
                         tasks.forEach((e) => {
                             console.log(e);
-                            this.taskList.push(new Task(e.id,e.name,e.dueDate,e.isCompleted));
+                            this.taskList.push(new Task(e.name,e.dueDate,e.isCompleted));
                         });
                       
                     },
                     (error) => console.log(error)
                   );
-     console.log('ngOnInit tasks list: ', this.taskList);
+    this.taskService.getOnTaskAdded().subscribe(
+            (task: Task) => this.taskList.push(task)
+    );
    
   }
 

@@ -1,7 +1,7 @@
 /**
  * New typescript file
  */
-import { Injectable } from '@angular/core';
+import { Injectable,EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Task } from './task.model';
@@ -11,8 +11,16 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class TaskService {
+    
+    private onTaskAdded:EventEmitter<Task>;
   
-  constructor(private http:Http){}
+  constructor(private http:Http){
+      this.onTaskAdded = new EventEmitter<Task>();
+  }
+  
+  public getOnTaskAdded(){
+      return this.onTaskAdded;
+  }
   
   public getTasks(){
     return this.http.get('/api/tasks')
@@ -36,5 +44,5 @@ export class TaskService {
                   }
           );
   }
-  
+    
 }

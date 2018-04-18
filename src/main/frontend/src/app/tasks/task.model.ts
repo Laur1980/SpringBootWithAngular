@@ -3,9 +3,9 @@
  */
 export class Task{
   
-  constructor(private id:number,private name:string,private dueDate:string,private isCompleted:boolean){
-    console.log('Task '+this.id+' created!');
-  }
+  private id:number;
+    
+  constructor(private name:string,private dueDate:string,private isCompleted:boolean){}
   
   public getId():number {
     return this.id;
