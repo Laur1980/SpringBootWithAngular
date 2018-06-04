@@ -11,38 +11,31 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class TaskService {
-    
+
     private onTaskAdded:EventEmitter<Task>;
-  
+
   constructor(private http:Http){
       this.onTaskAdded = new EventEmitter<Task>();
   }
-  
+
   public getOnTaskAdded(){
       return this.onTaskAdded;
   }
-  
+
   public getTasks(){
     return this.http.get('/api/tasks')
-                    .map(response => response.json());
+                    .map( response => response.json() );
   }
-  
-  public saveTask(task:Task){
+
+  public saveTask(task:Task, checked:boolean){
+      task.isCompleted = checked;
       return this.http.post("/api/tasks/save",task)
-          .map(
-                  (response) => {
-                      return response.json();
-                  }
-          );
+          .map(response => response.json());
   }
-  
+
   public deleteTask(taskId: number){
       return this.http.delete("/api/tasks/delete"+"/"+taskId)
-          .map(
-                  (response) => {
-                      return response.json();
-                  }
-          );
+          .map(response => response.json());
   }
-    
+
 }

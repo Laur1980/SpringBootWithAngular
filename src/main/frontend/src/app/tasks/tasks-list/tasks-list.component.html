@@ -1,14 +1,15 @@
 <ul class="list-group">
 	<li *ngFor="let task of getTaskList();index as i" 
 		 class="list-group-item">
-		 Id: {{ task.getId() }}
+		 Id: {{ task.id }}
 		 <div class="task-checkbox">
-		 	<input type="checkbox" class="" 
-		 		   [checked]="task.getIsCompleted()" 
+		 	<input type="checkbox" 
+		 		   class="list-child" 
+		 		   [checked]="task.isCompleted" 
 		 		   (change)="onChangeTask($event,task)"/>
 		 </div>
-		 <span ngClass="{{ task.getIsCompleted()? 'name completed' : 'name' }}">{{ task.getName() }}</span>
-		 <span class="label {{getDueDateLabel(task)}}">{{ task.getDueDate() }}</span>
+		 <span ngClass="{{ task.isCompleted ? 'name completed' : 'name' }}">{{ task.name }}</span>
+		 <span class="label {{getDueDateLabel(task)}}">{{ task.dueDate }}</span>
 		 <button class="btn btn-danger" (click)="onRemove(i)">DELETE</button>
 	</li>
 </ul>
